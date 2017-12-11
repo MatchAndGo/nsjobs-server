@@ -10,11 +10,13 @@ const FirebaseApp = firebase.initializeApp({ databaseURL: FIREBASE_URL });
 const FirebaseDatabase = firebase.database();
 const ref = FirebaseDatabase.ref(JOBS_DATABASE);
 
+const Persistence = {};
+
 /**
  * Store a job offer in the database.
  * @param {*} offer
  */
-function saveOffer(offer) {
+Persistence.saveOffer = function (offer) {
   return ref.child(hash(offer.link)).set(offer);
 }
 
@@ -22,23 +24,33 @@ function saveOffer(offer) {
  * Get a job offer from the database.
  * @param {*} offer
  */
-function getOffer(offer) {
+Persistence.getOffer = function (offer) {
   return ref.child(hash(offer.link)).once('value');
+}
+
+/**
+ * Get all job offers from the database.
+ * @param {*} params - The request params
+ */
+Persistence.getJobs = function (params) {
+  return ref.once('value').then(data => (
+    new Promise((resolve, reject) => {
+      const jobs = data.val();
+      const jobList = Object.keys(jobs).map(id => Object.assign({ id }, jobs[id]));
+      resolve(jobList)
+    })
+  ));
 }
 
 /**
  * Add a new vote to an existing offer
  * @param {*} offer
  */
-function vote(type, offer, uid) {
-  console.log('persistence:vote:type:', type);
-  console.log('persistence:vote:offer:', offer);
-  console.log('persistence:vote:uid:', uid);
+Persistence.vote = function (type, offer, uid) {
   return ref.child(hash(offer.link))
     .child('votes')
     .child(type)
     .push(uid);
 }
 
-
-module.exports = { saveOffer, getOffer, vote };
+module.exports = Persistence;
