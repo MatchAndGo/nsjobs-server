@@ -4,13 +4,15 @@ const config = require('../config');
 const persistence = require('./jobs.persistence');
 const SlackMessage = require('../slack/SlackMessage');
 
+const Controller = {};
+
 /**
  * Add a new job to the system.
  *
  * @param {object} offer
  * @param {string} offer.text - The url where the offer is announced.
  */
-function postJob(offer) {
+Controller.postJob = function (offer) {
   return persistence.saveOffer(offer);
 }
 
@@ -20,8 +22,17 @@ function postJob(offer) {
  * @param {object} offer
  * @param {string} offer.text - The url where the offer is announced.
  */
-function getJob(offer) {
+Controller.getJob = function (offer) {
   return persistence.getOffer(offer);
+}
+
+/**
+ * Returns all the job offers
+ *
+ * @param {object} params - The request params
+ */
+Controller.getJobs = function (params) {
+  return persistence.getJobs(params);
 }
 
 /**
@@ -31,15 +42,15 @@ function getJob(offer) {
  *
  * @param {object} offer
  */
-function broadcast(offer) {
-    return getJob(offer)
-      .then((dataSnapshot) => {
-        const existingOffer = dataSnapshot.val();
+Controller.broadcast = function (offer) {
+  return this.getJob(offer)
+    .then((dataSnapshot) => {
+      const existingOffer = dataSnapshot.val();
 
-        return existingOffer
-          ? broadcastSlack(existingOffer)
-          : postJob(offer).then(() => broadcastSlack(offer));
-      });
+      return existingOffer
+        ? this.broadcastSlack(existingOffer)
+        : this.postJob(offer).then(() => this.broadcastSlack(offer));
+    });
 }
 
 /**
@@ -47,7 +58,7 @@ function broadcast(offer) {
  *
  * @param {object} offer
  */
-function vote(type, offer) {
+Controller.vote = function (type, offer) {
   return persistence.vote(type, offer);
 }
 
@@ -56,9 +67,9 @@ function vote(type, offer) {
  *
  * @param {object} offer
  */
-function broadcastSlack(offer) {
+Controller.broadcastSlack = function (offer) {
   const slackMessage = new SlackMessage(offer);
   return slackMessage.broadcast();
 }
 
-module.exports = { broadcast, vote, postJob, getJob, broadcastSlack };
+module.exports = Controller;
