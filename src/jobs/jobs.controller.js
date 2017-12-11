@@ -58,8 +58,8 @@ Controller.broadcast = function (offer) {
  *
  * @param {object} offer
  */
-Controller.vote = function (type, offer) {
-  return persistence.vote(type, offer);
+Controller.vote = function (type, offer, uid) {
+  return persistence.vote(type, offer, uid);
 }
 
 /**

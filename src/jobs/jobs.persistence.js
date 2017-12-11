@@ -46,13 +46,11 @@ Persistence.getJobs = function (params) {
  * Add a new vote to an existing offer
  * @param {*} offer
  */
-Persistence.vote = function (type, offer) {
-  const vote = `${offer.meta.user_id}/${offer.meta.team_id}`;
+Persistence.vote = function (type, offer, uid) {
   return ref.child(hash(offer.link))
     .child('votes')
     .child(type)
-    .push(vote);
+    .push(uid);
 }
-
 
 module.exports = Persistence;
