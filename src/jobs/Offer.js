@@ -4,21 +4,26 @@ const URL_REGEX = /(?:http|https):\/\/((?:[\w-]+)(?:\.[\w-]+)+)(?:[\w.,@?^=%&amp
  *
  */
 
- class Offer {
+class Offer {
     /**
      *
      * @param {object} query
      */
     constructor(query) {
-        this.link = this._getLink(query.text);
+        console.log('\nOFFER: ', query);
+        if (query.attachments) {
+            this.link = this._getLink(query.attachments[0].fallback);
+        } else {
+            this.link = this._getLink(query.text);
+        }
         this.description = this._getDescription(query.text, this.link);
         this.createdAt = Date.now();
         this.text = query.text;
         this.meta = query;
         this.shared = 0;
         this.votes = {
-          upvotes: [],
-          downvotes: []
+            upvotes: [],
+            downvotes: []
         };
     }
 
@@ -32,7 +37,7 @@ const URL_REGEX = /(?:http|https):\/\/((?:[\w-]+)(?:\.[\w-]+)+)(?:[\w.,@?^=%&amp
     }
 
     _getDescription(rawText, link) {
-      return rawText.replace(link, '').trim();
+        return rawText.replace(link, '').trim();
     }
 }
 
