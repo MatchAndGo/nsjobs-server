@@ -1,4 +1,3 @@
-const fetch = require('node-fetch');
 const Logger = require('../utils/logger');
 const SlackAttachments = require('./slack.attachments');
 
@@ -12,25 +11,12 @@ class SlackMessage {
       title_link: offer.link
     });
 
-    const voteAttachment = Object.assign({}, SlackAttachments.VOTE);
-
     this.content = {
       attachments: [
         offerAttachment,
         SlackAttachments.VOTE
       ]
     };
-  }
-
-  /**
-  * Send the job offer across the slack channels
-  * @param {*} responseUrl
-  */
-  broadcast(responseUrl) {
-    Logger.log('Class:SlackMessage:broadcast', { responseUrl });
-    const content = JSON.stringify(this.content);
-    const options = { method: 'POST', body: content };
-    return fetch(responseUrl, options);
   }
 }
 

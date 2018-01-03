@@ -1,12 +1,11 @@
 const bodyParser = require('body-parser');
 const app = require('express')();
 const PORT = process.env.PORT || 3000;
-const jobsRoutes = require('./src/jobs/jobs.routes');
-const slackRoutes = require('./src/slack/slack.routes');
+const router = require('./src/jobs/jobs.router');
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
-app.post('/jobs', jobsRoutes.broadcast);
-app.post('/slack', slackRoutes.sendMessage);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.post('/jobs', router.post);
+app.post('/slack', router.vote);
 
 app.listen(PORT);
