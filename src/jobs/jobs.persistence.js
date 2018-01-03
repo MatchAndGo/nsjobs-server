@@ -1,7 +1,8 @@
 const firebase = require('firebase');
 const Logger = require('../utils/logger');
 const JOBS_DATABASE = require('../config/index').JOBS_DATABASE;
-
+const FIREBASE_URL = require('../config/index').FIREBASE_URL;
+const FirebaseApp = firebase.initializeApp({ databaseURL: FIREBASE_URL }); // eslint-disable-line
 const FirebaseDatabase = firebase.database();
 const ref = FirebaseDatabase.ref(JOBS_DATABASE);
 
