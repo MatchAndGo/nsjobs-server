@@ -26,7 +26,7 @@ function getOffer(offer) {
   return ref
     .child(offer.id)
     .once('value')
-    .val();
+    .then(snapshot => snapshot.val());
 }
 
 /**
