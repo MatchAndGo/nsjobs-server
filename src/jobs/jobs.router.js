@@ -12,7 +12,7 @@ async function post(req, res) {
   try {
     const offer = _buildOffer(req.body);
     Logger.log('Jobs:routes:post', { offer });
-    await controller.post(offer);
+    await controller.postJob(offer);
     await slackService.broadcast(offer, config.SLACK_BOT_URL);
     res.status(201).send('Offer created');
   } catch (error) {
