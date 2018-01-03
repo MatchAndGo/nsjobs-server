@@ -1,8 +1,8 @@
 const Logger = require('../utils/logger');
 const config = require('../config');
 const controller = require('./jobs.controller');
-const Offer = require('./Offer');
 const slackService = require('../slack/slack.service');
+const jobService = require('./jobs.service');
 
 /**
  * Create a new job offer.
@@ -10,7 +10,7 @@ const slackService = require('../slack/slack.service');
  */
 async function post(req, res) {
   try {
-    const offer = _buildOffer(req.body);
+    const offer = jobService.createJob(req.body);
     Logger.log('Jobs:routes:post', { offer });
     await controller.postJob(offer);
     await slackService.broadcast(offer, config.SLACK_BOT_URL);
@@ -31,8 +31,8 @@ async function vote(req, res) {
     const type = action.value.toLowerCase();
     const uid = `${payload.team.id}-${payload.user.id}`;
     // TODO: can we get the id easier?
-    const offerLink = Offer.getLink(payload.original_message.attachments[0].fallback);
-    const offerId = Offer.hash(offerLink);
+    const offerLink = jobService.getLink(payload.original_message.attachments[0].fallback);
+    const offerId = jobService.hash(offerLink);
 
     Logger.log('Slack:routes:vote', { offerId, uid, type });
 
@@ -42,16 +42,6 @@ async function vote(req, res) {
     Logger.error('Slack:routes:vote', { error });
     return res.sendStatus(500);
   }
-}
-
-
-/**
- * Build an offer object from a http request.
- * @param {object} query
- */
-function _buildOffer(query) {
-  Logger.log('Jobs:routes:_buildOffer', { query });
-  return new Offer(query);
 }
 
 
