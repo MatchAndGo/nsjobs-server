@@ -21,6 +21,7 @@ describe('jobs.controller', () => {
         done();
       });
     });
+    
     it('should not create a new offer when the offer already exists in the database', done => {
       jest.spyOn(persistence, 'getOffer').mockImplementation(() => Promise.resolve(true));
       jest.spyOn(persistence, 'saveOffer').mockImplementation(() => Promise.resolve());

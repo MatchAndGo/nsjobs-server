@@ -1,4 +1,4 @@
-const jobsService = require('../../src/jobs/jobs.service');
+const jobsService = require('../../src/jobs/jobs.service.js');
 
 describe('jobs.service', () => {
   beforeEach(() => {
