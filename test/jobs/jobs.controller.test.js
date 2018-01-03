@@ -3,9 +3,7 @@ jest.setMock('node-fetch', fetch);
 
 const controller = require('../../src/jobs/jobs.controller');
 const persistence = require('../../src/jobs/jobs.persistence');
-const SlackActions = require('../../src/slack/slack.actions');
-
-const { offer, existingOfferSnapshot, noOfferSnapshot } = require('../mocks');
+const { offer } = require('../mocks');
 
 describe('jobs.controller', () => {
   beforeEach(() => {

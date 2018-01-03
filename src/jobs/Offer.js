@@ -1,5 +1,5 @@
 const Logger = require('../utils/logger');
-const URL_REGEX = /(?:http|https):\/\/((?:[\w-]+)(?:\.[\w-]+)+)(?:[\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/;
+const URL_REGEX = /(?:http|https):\/\/((?:[\w-]+)(?:\.[\w-]+)+)(?:[\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?/;
 const crypto = require('crypto');
 
 class Offer {
@@ -28,10 +28,6 @@ class Offer {
     this.text = query.text;
     this.meta = query;
     this.shared = 0;
-    this.votes = {
-      upvotes: [],
-      downvotes: []
-    };
   }
 
   _getDescription(rawText, link) {
