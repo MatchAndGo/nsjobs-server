@@ -14,7 +14,7 @@ async function broadcast(offer, slackUrl) {
 }
 
 function serialize(offer) {
-  return new SlackMessage(offer);
+  return new SlackMessage(offer).content;
 }
 
 
