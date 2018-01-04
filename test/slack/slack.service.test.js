@@ -20,15 +20,17 @@ describe('slack.service', () => {
     });
   });
 
-  describe('.updateMessage', () => {
-    it('should edit the message when upvoting', () => {
-      const actual = slackService.updateMessage(mockMessage, 'upvote');
-      expect(actual.attachments[0].actions[0].text).toEqual('1 👍');
-    });
+  describe('.serialize', () => {
+    it('should edit the message with the votes', () => {
+      mockOffer.votes = {
+        uid0: 'upvote',
+        uid1: 'upvote',
+        uid2: 'downvote',
+      };
 
-    it('should edit the message when downvoting', () => {
-      const actual = slackService.updateMessage(mockMessage, 'downvote');
-      expect(actual.attachments[0].actions[1].text).toEqual('1 👎');
+      const actual = slackService.serialize(mockOffer);
+      expect(actual.content.attachments[0].actions[0].text).toEqual('2 👍');
+      expect(actual.content.attachments[0].actions[1].text).toEqual('1 👎');
     });
   });
 });

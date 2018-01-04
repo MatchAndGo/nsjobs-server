@@ -13,24 +13,10 @@ async function broadcast(offer, slackUrl) {
   return fetch(slackUrl, { method, body });
 }
 
-/**
- * Update a slack message with the new votes.
- */
-function updateMessage(message, vote) {
-  let upvotes = message.attachments[0].actions[0].text.match(/\d+/)[0];
-  let downvotes = message.attachments[0].actions[1].text.match(/\d+/)[0];
-
-  switch (vote) {
-    case 'upvote':
-      message.attachments[0].actions[0].text = `${++upvotes} 👍`;
-      break;
-    case 'downvote':
-      message.attachments[0].actions[1].text = `${++downvotes} 👎`;
-      break;
-  }
-  return message;
+function serialize(offer) {
+  return new SlackMessage(offer);
 }
 
 
 
-module.exports = { broadcast, updateMessage };
+module.exports = { broadcast, serialize };

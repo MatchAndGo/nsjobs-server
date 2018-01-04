@@ -20,9 +20,10 @@ async function postJob(offer) {
  *
  * @param {object} offer
  */
-function vote(jobId, uid, type) {
-  Logger.log('Jobs:controller:vote', { jobId, uid, type });
-  return persistence.vote(jobId, uid, type);
+async function vote(offerId, uid, type) {
+  Logger.log('Jobs:controller:vote', { offerId, uid, type });
+  await persistence.vote(offerId, uid, type);
+  return persistence.getOfferById(offerId);
 }
 
 module.exports = { vote, postJob };

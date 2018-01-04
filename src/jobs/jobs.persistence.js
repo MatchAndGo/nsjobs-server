@@ -23,11 +23,21 @@ function saveOffer(offer) {
  */
 function getOffer(offer) {
   Logger.log('Jobs:persistence:getOffer', { offer });
+  return getOfferById(offer.id);
+}
+
+/**
+ * Get a job offer from the database.
+ * @param {string} id
+ */
+function getOfferById(id) {
+  Logger.log('Jobs:persistence:getOfferById', { id });
   return ref
-    .child(offer.id)
+    .child(id)
     .once('value')
     .then(snapshot => snapshot.val());
 }
+
 
 /**
  * Add a new vote to an existing offer.
@@ -43,4 +53,4 @@ function vote(jobId, uid, type) {
 }
 
 
-module.exports = { saveOffer, getOffer, vote };
+module.exports = { saveOffer, getOffer, vote, getOfferById };

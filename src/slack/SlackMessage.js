@@ -15,6 +15,18 @@ class SlackMessage {
         SlackAttachments.VOTE
       ]
     };
+
+    if (offer.votes) {
+      let upvotes = 0;
+      let downvotes = 0;
+      
+      for (let uid in offer.votes) {
+        offer.votes[uid] === 'upvote' ? upvotes++ : downvotes++;
+      }
+
+      this.content.attachments[0].actions[0].text = `${upvotes} 👍`;
+      this.content.attachments[0].actions[1].text = `${downvotes} 👎`;
+    }
   }
 }
 
