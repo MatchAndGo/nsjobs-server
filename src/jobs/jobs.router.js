@@ -37,6 +37,7 @@ async function vote(req, res) {
     Logger.log('Slack:routes:vote', { offerId, uid, type });
 
     await controller.vote(offerId, uid, type);
+    // TODO: Get votes from database to prevent race condition
     const updatedMessage = slackService.updateMessage(payload.original_message, type);
     res.status(200).send(updatedMessage);
   } catch (error) {
