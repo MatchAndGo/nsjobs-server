@@ -4,7 +4,7 @@ jest.setMock('node-fetch', fetch);
 const slackService = require('../../src/slack/slack.service');
 const mockOffer = require('../mocks').offer;
 // Test the message format in https://api.slack.com/docs/messages/builder
-const expected = require('./slack-message.json');
+const mockMessage = require('./slack-message.json');
 
 
 describe('slack.service', () => {
@@ -14,9 +14,21 @@ describe('slack.service', () => {
       slackService.broadcast(mockOffer, 'https://www.slack-url.com').then(() => {
         expect(fetch.mock.calls[0][0]).toEqual('https://www.slack-url.com');
         expect(fetch.mock.calls[0][1].method).toEqual('POST');
-        expect(JSON.parse(fetch.mock.calls[0][1].body)).toEqual(expected);
+        expect(JSON.parse(fetch.mock.calls[0][1].body)).toEqual(mockMessage);
         done();
       });
+    });
+  });
+
+  describe('.updateMessage', () => {
+    it('should edit the message when upvoting', () => {
+      const actual = slackService.updateMessage(mockMessage, 'upvote');
+      expect(actual.attachments[0].actions[0].text).toEqual('1 👍');
+    });
+
+    it('should edit the message when downvoting', () => {
+      const actual = slackService.updateMessage(mockMessage, 'downvote');
+      expect(actual.attachments[0].actions[1].text).toEqual('1 👎');
     });
   });
 });

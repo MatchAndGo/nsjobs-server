@@ -1,27 +1,24 @@
 {
+	"text" : "fake_description",
     "attachments": [
-        {
-            "pretext": "Job announcement!",
-            "color": "#b5b0d4",
-            "title": "https://example.com/foo/bar fake_description",
-            "title_link": "https://example.com/foo/bar"
-        },
         {
             "color": "#7761fd",
             "text": "Vote this offer!",
+			"title": "https://example.com/foo/bar",
+            "title_link": "https://example.com/foo/bar",
             "fallback": "You are unable to vote :(",
             "callback_id": "vote",
             "attachment_type": "default",
             "actions": [
                 {
                     "name": "vote",
-                    "text": "👍",
+                    "text": "0 👍",
                     "type": "button",
                     "value": "upvote"
                 },
                 {
                     "name": "vote",
-                    "text": "👎",
+                    "text": "0 👎",
                     "type": "button",
                     "value": "downvote"
                 }

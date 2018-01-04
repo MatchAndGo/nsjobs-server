@@ -5,15 +5,13 @@ class SlackMessage {
   constructor(offer) {
     Logger.log('Class:SlackMessage:constructor', { offer });
 
-    const offerAttachment = Object.assign({}, SlackAttachments.OFFER, {
-      author_name: offer.meta.user_name,
-      title: offer.meta.text,
-      title_link: offer.link
-    });
+    // Add title and link to the attachment
+    SlackAttachments.VOTE.title = offer.link;
+    SlackAttachments.VOTE.title_link = offer.link;
 
     this.content = {
+      text: offer.description,
       attachments: [
-        offerAttachment,
         SlackAttachments.VOTE
       ]
     };

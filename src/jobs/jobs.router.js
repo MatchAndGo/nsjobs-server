@@ -37,7 +37,8 @@ async function vote(req, res) {
     Logger.log('Slack:routes:vote', { offerId, uid, type });
 
     await controller.vote(offerId, uid, type);
-    res.status(200).send(payload.original_message); // TODO, send message with new vote count
+    const updatedMessage = slackService.updateMessage(payload.original_message, type);
+    res.status(200).send(updatedMessage);
   } catch (error) {
     Logger.error('Slack:routes:vote', { error });
     return res.sendStatus(500);
