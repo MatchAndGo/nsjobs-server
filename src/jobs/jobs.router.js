@@ -31,7 +31,7 @@ async function vote(req, res) {
     const type = action.value.toLowerCase();
     const uid = `${payload.team.id}-${payload.user.id}`;
     // TODO: can we get the id easier?
-    const offerLink = jobService.getLink(payload.original_message.attachments[0].fallback);
+    const offerLink = jobService.getLink(payload.original_message.attachments[0].title_link);
     const offerId = jobService.hash(offerLink);
 
     Logger.log('Slack:routes:vote', { offerId, uid, type });
