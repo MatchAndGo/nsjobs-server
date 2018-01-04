@@ -1,0 +1,31 @@
+{
+    "attachments": [
+        {
+            "pretext": "Job announcement!",
+            "color": "#b5b0d4",
+            "title": "https://example.com/foo/bar fake_description",
+            "title_link": "https://example.com/foo/bar"
+        },
+        {
+            "color": "#7761fd",
+            "text": "Vote this offer!",
+            "fallback": "You are unable to vote :(",
+            "callback_id": "vote",
+            "attachment_type": "default",
+            "actions": [
+                {
+                    "name": "vote",
+                    "text": "👍",
+                    "type": "button",
+                    "value": "upvote"
+                },
+                {
+                    "name": "vote",
+                    "text": "👎",
+                    "type": "button",
+                    "value": "downvote"
+                }
+            ]
+        }
+    ]
+}
