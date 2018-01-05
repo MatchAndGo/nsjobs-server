@@ -8,8 +8,8 @@ const Logger = require('../utils/logger');
 async function broadcast(offer, slackUrl) {
   Logger.log('slackService:broadcast', { offer, slackUrl });
   const method = 'POST';
-  const slackMessage = new SlackMessage(offer);
-  const body = JSON.stringify(slackMessage.content);
+  const slackMessage = serialize(offer);
+  const body = JSON.stringify(slackMessage);
   return fetch(slackUrl, { method, body });
 }
 
