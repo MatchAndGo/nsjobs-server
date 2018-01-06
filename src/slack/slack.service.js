@@ -6,7 +6,7 @@ const winston = require('winston');
  * Send a job offer to a slack channel
  */
 async function broadcast(offer, slackUrl) {
-  winston.debug('slack-service:broadcast', { offer, slackUrl });
+  winston.info('slack-service:broadcast', { offer, slackUrl });
   const method = 'POST';
   const slackMessage = serialize(offer);
   const body = JSON.stringify(slackMessage);

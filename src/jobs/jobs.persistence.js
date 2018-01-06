@@ -11,7 +11,7 @@ const ref = FirebaseDatabase.ref(JOBS_DATABASE);
  * @param {*} offer
  */
 function saveOffer(offer) {
-  winston.debug('jobs-persistence:postJob', offer);
+  winston.info('jobs-persistence:postJob', offer);
   return ref
     .child(offer.id)
     .set(offer);
@@ -22,7 +22,7 @@ function saveOffer(offer) {
  * @param {*} offer
  */
 function getOffer(offer) {
-  winston.debug('jobs-persistence:getOffer', offer);
+  winston.info('jobs-persistence:getOffer', offer);
   return getOfferById(offer.id);
 }
 
@@ -31,7 +31,7 @@ function getOffer(offer) {
  * @param {string} id
  */
 function getOfferById(id) {
-  winston.debug('jobs-persistence:getOfferById', id);
+  winston.info('jobs-persistence:getOfferById', id);
   return ref
     .child(id)
     .once('value')
@@ -45,7 +45,7 @@ function getOfferById(id) {
  * The votes are indexed by userID this way we prevent an user from voting twice.
  */
 function vote(jobId, uid, type) {
-  winston.debug('jobs-persistence:vote', {jobId, uid, type});
+  winston.info('jobs-persistence:vote', {jobId, uid, type});
   return ref.child(jobId)
     .child('votes')
     .child(uid)

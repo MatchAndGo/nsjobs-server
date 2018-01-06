@@ -3,7 +3,7 @@ const SlackAttachments = require('./slack.attachments');
 
 class SlackMessage {
   constructor(offer) {
-    winston.debug('SlackMessage:constructor', offer);
+    winston.info('SlackMessage:constructor', offer);
     // Add title and link to the attachment
     SlackAttachments.VOTE.title = offer.link;
     SlackAttachments.VOTE.title_link = offer.link;

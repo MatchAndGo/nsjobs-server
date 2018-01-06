@@ -7,7 +7,7 @@ const persistence = require('./jobs.persistence');
  * @param {object} offer
  */
 async function postJob(offer) {
-  winston.debug('jobs-controller:postJob', offer);
+  winston.info('jobs-controller:postJob', offer);
   const existingOffer = await persistence.getOffer(offer);
   if (!existingOffer) {
     return persistence.saveOffer(offer);
@@ -21,7 +21,7 @@ async function postJob(offer) {
  * @param {object} offer
  */
 async function vote(offerId, uid, type) {
-  winston.debug('jobs-controller:postJob', { offerId, uid, type });
+  winston.info('jobs-controller:postJob', { offerId, uid, type });
   await persistence.vote(offerId, uid, type);
   return persistence.getOfferById(offerId);
 }
