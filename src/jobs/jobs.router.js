@@ -1,4 +1,4 @@
-const Logger = require('../utils/logger');
+const winston = require('winston');
 const config = require('../config');
 const controller = require('./jobs.controller');
 const slackService = require('../slack/slack.service');
@@ -11,12 +11,11 @@ const jobService = require('./jobs.service');
 async function post(req, res) {
   try {
     const offer = jobService.createJob(req.body);
-    Logger.log('Jobs:routes:post', { offer });
     await controller.postJob(offer);
     await slackService.broadcast(offer, config.SLACK_BOT_URL);
     res.status(201).send('Offer created');
   } catch (error) {
-    Logger.error('Jobs:routes:post', { error });
+    winston.error('jobs-router:post', { payload: req.body, error });
     return res.sendStatus(500);
   }
 }
@@ -33,14 +32,11 @@ async function vote(req, res) {
     // TODO: can we get the id easier?
     const offerLink = jobService.getLink(payload.original_message.attachments[0].title_link);
     const offerId = jobService.hash(offerLink);
-
-    Logger.log('Slack:routes:vote', { offerId, uid, type });
-
     const offer = await controller.vote(offerId, uid, type);
     const updatedMessage = slackService.serialize(offer);
     res.status(200).send(updatedMessage);
   } catch (error) {
-    Logger.error('Slack:routes:vote', { error });
+    winston.error('jobs-router:vote', { payload: req.body.payload, error });
     return res.sendStatus(500);
   }
 }

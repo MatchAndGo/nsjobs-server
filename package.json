@@ -10,7 +10,8 @@
     "firebase": "^4.7.0",
     "firebase-admin": "^5.5.1",
     "node-fetch": "^1.7.3",
-    "request": "^2.83.0"
+    "request": "^2.83.0",
+    "winston": "^2.4.0"
   },
   "scripts": {
     "start": "node index.js",
