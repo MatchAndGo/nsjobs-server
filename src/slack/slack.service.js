@@ -1,12 +1,12 @@
 const fetch = require('node-fetch');
 const SlackMessage = require('./SlackMessage');
-const Logger = require('../utils/logger');
+const winston = require('winston');
 
 /**
  * Send a job offer to a slack channel
  */
 async function broadcast(offer, slackUrl) {
-  Logger.log('slackService:broadcast', { offer, slackUrl });
+  winston.debug('slack-service:broadcast', { offer, slackUrl });
   const method = 'POST';
   const slackMessage = serialize(offer);
   const body = JSON.stringify(slackMessage);

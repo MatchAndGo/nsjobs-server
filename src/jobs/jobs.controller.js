@@ -1,4 +1,4 @@
-const Logger = require('../utils/logger');
+const winston = require('winston');
 const persistence = require('./jobs.persistence');
 
 /**
@@ -7,7 +7,7 @@ const persistence = require('./jobs.persistence');
  * @param {object} offer
  */
 async function postJob(offer) {
-  Logger.log('Jobs:controller:postJob', { offer });
+  winston.debug('jobs-controller:postJob', offer);
   const existingOffer = await persistence.getOffer(offer);
   if (!existingOffer) {
     return persistence.saveOffer(offer);
@@ -21,7 +21,7 @@ async function postJob(offer) {
  * @param {object} offer
  */
 async function vote(offerId, uid, type) {
-  Logger.log('Jobs:controller:vote', { offerId, uid, type });
+  winston.debug('jobs-controller:postJob', { offerId, uid, type });
   await persistence.vote(offerId, uid, type);
   return persistence.getOfferById(offerId);
 }

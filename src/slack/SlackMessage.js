@@ -1,10 +1,9 @@
-const Logger = require('../utils/logger');
+const winston = require('winston');
 const SlackAttachments = require('./slack.attachments');
 
 class SlackMessage {
   constructor(offer) {
-    Logger.log('Class:SlackMessage:constructor', { offer });
-
+    winston.debug('SlackMessage:constructor', offer);
     // Add title and link to the attachment
     SlackAttachments.VOTE.title = offer.link;
     SlackAttachments.VOTE.title_link = offer.link;
