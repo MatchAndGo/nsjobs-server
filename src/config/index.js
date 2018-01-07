@@ -1,6 +1,5 @@
 const DATABASE_NAME =  process.env.DATABASE_NAME;
 const FIREBASE_URL = process.env.FIREBASE_URL;
 const SLACK_BOT_URL = process.env.SLACK_BOT_URL;
-const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY;
 
-module.exports = { FIREBASE_URL, SLACK_BOT_URL, DATABASE_NAME, FIREBASE_API_KEY };
+module.exports = { FIREBASE_URL, SLACK_BOT_URL, DATABASE_NAME };
