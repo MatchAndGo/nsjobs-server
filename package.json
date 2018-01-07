@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "engines": {
-    "node": "^8.9.4"
+    "node": "8"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
