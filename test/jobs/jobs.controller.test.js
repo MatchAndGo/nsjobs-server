@@ -34,6 +34,7 @@ describe('jobs.controller', () => {
   describe('vote', () => {
     it('should update the offer votes in the persistence', done => {
       jest.spyOn(persistence, 'vote').mockImplementation(() => Promise.resolve());
+      jest.spyOn(persistence, 'getOfferById').mockImplementation(() => Promise.resolve());
       expect(persistence.vote).not.toHaveBeenCalled();
 
       controller.vote('fakeId', 'fakeUid', 'fakeType').then(() => {

@@ -1,10 +1,14 @@
 const firebase = require('firebase');
 const winston = require('winston');
-const JOBS_DATABASE = require('../config/index').JOBS_DATABASE;
-const FIREBASE_URL = require('../config/index').FIREBASE_URL;
-const FirebaseApp = firebase.initializeApp({ databaseURL: FIREBASE_URL }); // eslint-disable-line
+const config = require('../config/index');
+
+const DATABASE_NAME = config.DATABASE_NAME;
+const FIREBASE_URL = config.FIREBASE_URL;
+
+// Firebase requires a global initialization 
+firebase.initializeApp({ databaseURL: FIREBASE_URL });
 const FirebaseDatabase = firebase.database();
-const ref = FirebaseDatabase.ref(JOBS_DATABASE);
+const ref = FirebaseDatabase.ref(DATABASE_NAME);
 
 /**
  * Store a job offer in the database.
