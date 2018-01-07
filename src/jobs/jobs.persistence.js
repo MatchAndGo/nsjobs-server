@@ -4,9 +4,10 @@ const config = require('../config/index');
 
 const DATABASE_NAME = config.DATABASE_NAME;
 const FIREBASE_URL = config.FIREBASE_URL;
+const FIREBASE_API_KEY = config.FIREBASE_API_KEY;
 
 // Firebase requires a global initialization 
-firebase.initializeApp({ databaseURL: FIREBASE_URL });
+firebase.initializeApp({ databaseURL: FIREBASE_URL, apiKey: FIREBASE_API_KEY });
 const FirebaseDatabase = firebase.database();
 const ref = FirebaseDatabase.ref(DATABASE_NAME);
 
@@ -49,7 +50,7 @@ function getOfferById(id) {
  * The votes are indexed by userID this way we prevent an user from voting twice.
  */
 function vote(jobId, uid, type) {
-  winston.info('jobs-persistence:vote', {jobId, uid, type});
+  winston.info('jobs-persistence:vote', { jobId, uid, type });
   return ref.child(jobId)
     .child('votes')
     .child(uid)
