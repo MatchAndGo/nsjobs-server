@@ -18,7 +18,8 @@
     "winston": "^2.4.0"
   },
   "scripts": {
-    "start": "DATABASE_NAME=jobs FIREBASE_URL=https://nsjobs-f8648.firebaseio.com/ nodemon index.js",
+    "start": "node index.js",
+    "dev": "DATABASE_NAME=jobs FIREBASE_URL=https://nsjobs-f8648.firebaseio.com/ nodemon index.js",
     "test": "DATABASE_NAME=jobs FIREBASE_URL=https://test-database.firebaseapp.io jest",
     "test:watch": "DATABASE_NAME=jobs FIREBASE_URL=https://test-database.firebaseapp.io  jest --watch --verbose",
     "prepush": "npm test",
