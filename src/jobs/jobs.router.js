@@ -41,5 +41,17 @@ async function vote(req, res) {
   }
 }
 
+/**
+ * Get all jobs from the databse
+ */
+async function list(req, res) {
+  try {
+    const list = await controller.getAll();
+    res.json(list);
+  } catch (err) {
+    res.sendStatus(500);
+  }
+}
 
-module.exports = { post, vote };
+
+module.exports = { post, vote, list };

@@ -43,4 +43,43 @@ describe('jobs.controller', () => {
       });
     });
   });
+
+  describe('getAll', () => {
+    it('should return an empty list when there are no jobs in the database', done => {
+      jest.spyOn(persistence, 'getAll').mockImplementation(() => Promise.resolve([]));
+      controller.getAll().then(result => {
+        expect(result).toEqual([]);
+        done();
+      });
+    });
+
+    it('should return a list of well formatted jobs when there are jobs on the database', done => {
+      jest.spyOn(persistence, 'getAll').mockImplementation(() => Promise.resolve([{
+        id: 'fake_id',
+        createdAt: 1516213783482,
+        description: 'fake_description',
+        link: 'https://fake-link.con',
+        votes: { 
+          id0: 'upvote',
+          id1: 'upvote',
+          id2: 'downvote',
+        },
+        meta: {}
+      }]));
+
+      controller.getAll().then(result => {
+        expect(result).toEqual([{
+          createdAt: 1516213783482,
+          description: 'fake_description',
+          link: 'https://fake-link.con',
+          votes: {
+            upvotes: 2,
+            downvotes: 1
+          },
+          meta: {}
+        }]);
+        done();
+      });
+    });
+  });
 });

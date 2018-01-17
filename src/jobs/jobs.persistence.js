@@ -49,12 +49,19 @@ function getOfferById(id) {
  * The votes are indexed by userID this way we prevent an user from voting twice.
  */
 function vote(jobId, uid, type) {
-  winston.info('jobs-persistence:vote', {jobId, uid, type});
+  winston.info('jobs-persistence:vote', { jobId, uid, type });
   return ref.child(jobId)
     .child('votes')
     .child(uid)
     .set(type);
 }
 
+/**
+ * Return all entries from the database
+ */
+function getAll() {
+  return ref.once('value').then(data => data.val()).then(Object.values);
+}
 
-module.exports = { saveOffer, getOffer, vote, getOfferById };
+
+module.exports = { saveOffer, getOffer, vote, getOfferById, getAll };
