@@ -5,6 +5,9 @@ const app = require('express')();
 const router = require('./src/jobs/jobs.router');
 const PORT = process.env.PORT || 3000;
 
+// Start cronjobs
+require('./src/crons');
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors({ origin: config.ALLOWED_ORIGINS }));
